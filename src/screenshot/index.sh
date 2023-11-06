@@ -39,7 +39,6 @@ while : ; do
 			# Just re-encode JPEG
 			cjpeg -quality 95 -progressive -optimize "${file}" -outfile "${neatFile/.jpg/.jpeg}"
 		fi
-		fi
 		if [ "${success}" == "1" ]; then
 			rm -v "${file}"
 		fi
