@@ -1,13 +1,19 @@
 #!/bin/bash
 cd /sdcard/Pictures/
 # Start watching
-while : ;do
+echo "Screenshot metadata remover has started."
+while : ; do
 	tree -ifl ./ | grep -E "/[Ss]creenshot" | grep -E "\.jpg$" | while IFS= read -r file; do
 		success=0
 		neatFile="$file"
-		if [[ "$neatFile" == *"_"* ]]; then
+		if [[ "$neatFile" == S*"-"*"_"* ]]; then
+			# Use S filename cleanup strategy
+			neatFile="$(echo $file| cut -d'_' -f1).jpg"
+			echo "Cleaned file name to '${neatFile}' with S strategy."
+		elif [[ "$neatFile" == *"_"*"_"* ]]; then
+			# Use default filename cleanup strategy
 			neatFile="$(echo $file| cut -d'_' -f1,2).jpg"
-			echo "Cleaned file name from '${file}' to '${neatFile}'."
+			echo "Cleaned file name to '${neatFile}' with default strategy."
 		fi
 		# Encode WebP
 		if [ -e "$(which cwebp)" ]; then
@@ -18,6 +24,9 @@ while : ;do
 		if [ -e "$(which cjxl)" ]; then
 			echo "Encoding '${file} to JPEG XL...'"
  			cjxl -d 1.1 -e 4 -p "${file}" "${neatFile/.jpg/.jxl}" --container 0 -j 0 && success=1
+			djxl "${neatFile/.jpg/.jxl}" "${neatFile/.jpg/.jpeg}"
+		elif [ -e "$(which cjpeg)" ]; then
+			cjpeg -quality 95 -progressive -optimize "${file}" -outfile "${neatFile/.jpg/.jpeg}"
 		fi
 		if [ "${success}" == "1" ]; then
 			rm -v "${file}"
