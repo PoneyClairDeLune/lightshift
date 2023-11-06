@@ -2,7 +2,7 @@
 cd /sdcard/Pictures/
 # Start watching
 while : ;do
-	tree -ifl ./ | grep -E "\/[Ss]creenshot" | grep -E "\.[Jj][Pp][Gg]$" | while IFS= read -r file; do
+	tree -ifl ./ | grep -E "/[Ss]creenshot" | grep -E "\.[Jj][Pp][Gg]$" | while IFS= read -r file; do
 		success=0
 		# Encode WebP
 		if [ -e "$(which cwebp)" ]; then
