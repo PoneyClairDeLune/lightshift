@@ -12,7 +12,7 @@ while : ;do
 		# Encode JPEG XL
 		if [ -e "$(which cjxl)" ]; then
 			echo "Encoding '${file} to JPEG XL...'"
- 			cjxl -d 1.1 -e 4 -p "${file}" "${file/.jpg/.jxl}" && success=1
+ 			cjxl -d 1.1 -e 4 -p "${file}" "${file/.jpg/.jxl}" --container 0 -j 0 && success=1
 		fi
 		if [ "${success}" == "1" ]; then
 			rm -v "${file}"
