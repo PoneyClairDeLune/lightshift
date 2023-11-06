@@ -1,7 +1,7 @@
 #!/bin/bash
 cd /sdcard/Pictures/
 # Force installing certain dependencies
-which echo 2>/dev/null
+which echo 2>/dev/null 1>/dev/null
 if [ "$?" != "0" ]; then
 	apt install which -y
 fi
