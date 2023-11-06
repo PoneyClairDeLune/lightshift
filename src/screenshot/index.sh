@@ -18,5 +18,6 @@ while : ;do
 			rm -v "${file}"
 		fi
 	done
+	sleep 1s
 done
 exit
