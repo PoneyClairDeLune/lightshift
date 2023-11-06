@@ -31,13 +31,14 @@ while : ; do
 			echo "Encoding '${file} to JPEG XL...'"
  			cjxl -d 1.1 -e 4 -p "${file}" "${neatFile/.jpg/.jxl}" --container 0 -j 0 && success=1
 			djxl "${neatFile/.jpg/.jxl}" "${neatFile/.jpg/.jpeg}"
-		elif [ -e "$(which cwebp)" ]; then
-			# Encode WebP
-			echo "Encoding '${file}' to WebP..."
-			cwebp -m 5 -psnr 56 "${file}" -o "${neatFile/.jpg/.webp}" -quiet && success=1
 		elif [ -e "$(which cjpeg)" ]; then
 			# Just re-encode JPEG
 			cjpeg -quality 95 -progressive -optimize "${file}" -outfile "${neatFile/.jpg/.jpeg}"
+		fi
+		if [ -e "$(which cwebp)" ]; then
+			# Encode WebP
+			echo "Encoding '${file}' to WebP..."
+			cwebp -m 5 -psnr 56 "${file}" -o "${neatFile/.jpg/.webp}" -quiet && success=1
 		fi
 		if [ "${success}" == "1" ]; then
 			rm -v "${file}"
