@@ -1,5 +1,16 @@
 #!/bin/bash
 cd /sdcard/Pictures/
+# Force installing certain dependencies
+which echo 2>/dev/null
+if [ "$?" != "0" ]; then
+	apt install which -y
+fi
+if [ ! -e "$(which tree)" ]; then
+	apt install tree -y
+fi
+if [ ! -e "$(which cjxl)" ]; then
+	apt install libjxl-progs -y
+fi
 # Start watching
 echo "Screenshot metadata remover has started."
 while : ; do
